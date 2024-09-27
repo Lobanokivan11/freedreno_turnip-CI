@@ -155,4 +155,32 @@ EOF
 	fi
 }
 
+port_lib_for_adrenotools(){
+	libname=vulkan.freedreno.so
+	echo "Using patchelf to match soname" $'\n'
+	cp "$workdir"/mesa-main/build-android-aarch64/src/freedreno/vulkan/libvulkan_freedreno.so "$workdir"/$libname
+	cd "$workdir"
+	patchelf --set-soname $libname $libname
+	echo "Preparing meta.json" $'\n'
+	cat <<EOF > "meta.json"
+{
+	"schemaVersion": 1,
+	"name": "freedreno_turnip-CI",
+	"description": "$(date)",
+	"author": "MrMiy4mo, kethen",
+	"packageVersion": "1",
+	"vendor": "Mesa",
+	"driverVersion": "$(cat $workdir/mesa-main/VERSION)",
+	"minApi": $sdkver,
+	"libraryName": "$libname"
+}
+EOF
+
+	zip -9 "$workdir"/turnip_adrenotools.zip $libname meta.json &> /dev/null
+	if ! [ -a "$workdir"/turnip_adrenotools.zip ];
+		then echo -e "$red-Packing turnip_adrenotools.zip failed!$nocolor" && exit 1
+		else echo -e "$green-All done, you can take your module from here;$nocolor" && echo "$workdir"/turnip_adrenotools.zip
+	fi
+}
+
 run_all
