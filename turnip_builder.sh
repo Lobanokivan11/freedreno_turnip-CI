@@ -108,6 +108,7 @@ port_lib_for_magisk(){
 
 	echo "Prepare magisk module structure ..." $'\n'
 	p1="system/vendor/lib64/hw"
+        l1="system/lib64"
 	mkdir -p "$magiskdir" && cd "$_"
 	mkdir -p "$p1"
 
@@ -148,7 +149,7 @@ EOF
 
 	echo "Copy necessary files from work directory ..." $'\n'
 	cp "$workdir"/vulkan.adreno.so "$magiskdir"/"$p1"
-        cp $workdir/libbacktrace.so $driverdir
+        cp "$workdir"/libbacktrace.so "$magiskdir"/"$l1"
 
 	echo "Packing files in to magisk module ..." $'\n'
 	zip -r "$workdir"/turnip.zip ./* &> /dev/null
