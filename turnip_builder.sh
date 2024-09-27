@@ -18,6 +18,7 @@ run_all(){
 	prepare_workdir
 	build_lib_for_android
 	port_lib_for_magisk
+        port_lib_for_adrenotools
 }
 
 
