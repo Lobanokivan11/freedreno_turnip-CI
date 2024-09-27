@@ -88,7 +88,7 @@ EOF
 	echo "Generating build files ..." $'\n'
 	meson build-android-aarch64 --cross-file "$workdir"/mesa-main/android-aarch64 -Db_lto=true -Dplatforms=android -Dplatform-sdk-version=$sdkver -Dandroid-stub=true -Dgallium-drivers= -Dvulkan-drivers=freedreno -Dvulkan-beta=true -Dfreedreno-kmds=kgsl
 
-	echo "Compiling build files ..." $'\n'
+	ecdriverdir"ling build files ..." $'\n'
 	ninja -C build-android-aarch64
 }
 
@@ -97,6 +97,7 @@ EOF
 port_lib_for_magisk(){
 	echo "Using patchelf to match soname ..."  $'\n'
 	cp "$workdir"/mesa-main/build-android-aarch64/src/freedreno/vulkan/libvulkan_freedreno.so "$workdir"
+        cp "$workdir/mesa-main/build-android-aarch64/src/android_stub/libbacktrace.so" "$workdir"
 	cd "$workdir"
 	patchelf --set-soname vulkan.adreno.so libvulkan_freedreno.so
 	mv libvulkan_freedreno.so vulkan.adreno.so
@@ -147,6 +148,7 @@ EOF
 
 	echo "Copy necessary files from work directory ..." $'\n'
 	cp "$workdir"/vulkan.adreno.so "$magiskdir"/"$p1"
+        cp $workdir/libbacktrace.so $driverdir
 
 	echo "Packing files in to magisk module ..." $'\n'
 	zip -r "$workdir"/turnip.zip ./* &> /dev/null
