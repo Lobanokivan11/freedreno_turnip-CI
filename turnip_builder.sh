@@ -97,7 +97,6 @@ EOF
 port_lib_for_magisk(){
 	echo "Using patchelf to match soname ..."  $'\n'
 	cp "$workdir"/mesa-main/build-android-aarch64/src/freedreno/vulkan/libvulkan_freedreno.so "$workdir"
-        cp "$workdir/mesa-main/build-android-aarch64/src/android_stub/libbacktrace.so" "$workdir"
 	cd "$workdir"
 	patchelf --set-soname vulkan.adreno.so libvulkan_freedreno.so
 	mv libvulkan_freedreno.so vulkan.adreno.so
@@ -108,10 +107,8 @@ port_lib_for_magisk(){
 
 	echo "Prepare magisk module structure ..." $'\n'
 	p1="system/vendor/lib64/hw"
-        l1="system/lib64"
 	mkdir -p "$magiskdir" && cd "$_"
 	mkdir -p "$p1"
-        mkdir -p "$l1"
 
 	meta="META-INF/com/google/android"
 	mkdir -p "$meta"
@@ -146,12 +143,10 @@ EOF
 set_perm_recursive \$MODPATH/system 0 0 755 u:object_r:system_file:s0
 set_perm_recursive \$MODPATH/system/vendor 0 2000 755 u:object_r:vendor_file:s0
 set_perm \$MODPATH/$p1/vulkan.adreno.so 0 0 0644 u:object_r:same_process_hal_file:s0
-set_perm \$MODPATH/$l1/libbacktrace.so 0 0 0644 u:object_r:system_file:s0
 EOF
 
 	echo "Copy necessary files from work directory ..." $'\n'
 	cp "$workdir"/vulkan.adreno.so "$magiskdir"/"$p1"
-        cp "$workdir"/libbacktrace.so "$magiskdir"/"$l1"
 
 	echo "Packing files in to magisk module ..." $'\n'
 	zip -r "$workdir"/turnip.zip ./* &> /dev/null
