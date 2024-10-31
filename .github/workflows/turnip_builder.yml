@@ -40,4 +40,3 @@ jobs:
         files: |
            turnip_workdir/turnip.zip
            turnip_workdir/turnip_adrenotools.zip
-           turnip_workdir/turnip_overlayfs.zip
