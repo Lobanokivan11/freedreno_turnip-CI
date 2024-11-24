@@ -17,7 +17,8 @@ jobs:
         sudo apt update
         sudo apt build-dep mesa -y
         sudo apt update
-        sudo apt install meson
+        sudo apt install python-pip
+        sudo pip install meson
 
     - name: Execute build script
       run: bash ./turnip_builder.sh
