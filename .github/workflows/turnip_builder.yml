@@ -7,7 +7,7 @@ on:
 
 jobs:
   start_building_turnip:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
 
@@ -16,7 +16,6 @@ jobs:
         sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
         sudo apt update
         sudo apt build-dep mesa -y
-        sudo sed -i 's/jammy/mantic/g' /etc/apt/sources.list
         sudo apt update
         sudo apt install meson
 
