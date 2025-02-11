@@ -117,11 +117,11 @@ EOF
 			-Dplatform-sdk-version="$sdkver" \
 			-Dandroid-stub=true \
 			-Dgallium-drivers= \
+   			-Dimagination-srv=true \
 			-Dvulkan-drivers=freedreno \
 			-Dvulkan-beta=true \
 			-Dfreedreno-kmds=kgsl \
-			-Db_lto=true \
-			-Dstrip=true &> "$workdir/meson_log"
+			-Db_lto=true &> "$workdir/meson_log"
 
 	echo "Compiling build files ..." $'\n'
 		ninja -C build-android-aarch64 &> "$workdir/ninja_log"
