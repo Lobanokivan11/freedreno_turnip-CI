@@ -121,10 +121,10 @@ EOF
 			-Dvulkan-drivers=freedreno \
 			-Dvulkan-beta=true \
 			-Dfreedreno-kmds=kgsl \
-			-Db_lto=true &> "$workdir/meson_log"
+			-Db_lto=true
 
 	echo "Compiling build files ..." $'\n'
-		ninja -C build-android-aarch64 &> "$workdir/ninja_log"
+		ninja -C build-android-aarch64
 
 	if ! [ -a "$workdir"/mesa-main/build-android-aarch64/src/freedreno/vulkan/libvulkan_freedreno.so ]; then
 		echo -e "$red Build failed! $nocolor" && exit 1
